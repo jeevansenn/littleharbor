@@ -106,19 +106,19 @@
     .banner-card:hover img { transform: scale(1.06); }
     
     .pos-center { transform: translateX(0) scale(1.05); z-index: 20; opacity: 1; pointer-events: auto; }
-    .pos-left { transform: translateX(-60%) scale(0.85); z-index: 10; opacity: 0.5; cursor: pointer; }
-    .pos-right { transform: translateX(60%) scale(0.85); z-index: 10; opacity: 0.5; cursor: pointer; }
+    .pos-left { transform: translateX(-55%) scale(0.85); z-index: 10; opacity: 0.5; cursor: pointer; }
+    .pos-right { transform: translateX(55%) scale(0.85); z-index: 10; opacity: 0.5; cursor: pointer; }
   </style>
 </head>
 <body class="bg-[#121212] text-white antialiased overflow-x-hidden">
 
-  <!-- HERO SECTION -->
-  <header id="home" class="relative w-full h-screen min-h-[600px] bg-cover bg-center flex flex-col justify-between p-6 md:p-10 rounded-b-[40px] shadow-2xl overflow-hidden border-b border-white/10" style="background-image: url('banner-cat-pond.jpg');">
+  <!-- HERO SECTION (FIX MOBILE VIEWPORT HEIGHT) -->
+  <header id="home" class="relative w-full h-[100dvh] min-h-[550px] bg-cover bg-center flex flex-col justify-between p-4 sm:p-6 md:p-10 rounded-b-[30px] sm:rounded-b-[40px] shadow-2xl overflow-hidden border-b border-white/10" style="background-image: url('banner-cat-pond.jpg');">
     
-    <!-- NAVBAR (NAVBAR KANAN DIKEMBALIKAN KE SHOPPING BAG) -->
-    <nav class="enter-nav w-full max-w-5xl mx-auto z-20 relative">
-      <div class="animate-float bg-black/60 backdrop-blur-md rounded-full px-6 py-3 flex items-center justify-between shadow-2xl border border-white/20">
-        <a href="#home" class="font-brand text-white text-lg md:text-xl font-bold tracking-tight hover:scale-105 transition transform">little.harbor</a>
+    <!-- NAVBAR MOBILE RESPONSIVE -->
+    <nav class="enter-nav w-full max-w-5xl mx-auto z-20 relative pt-2 sm:pt-0">
+      <div class="animate-float bg-black/60 backdrop-blur-md rounded-full px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between shadow-2xl border border-white/20">
+        <a href="#home" class="font-brand text-white text-base sm:text-lg md:text-xl font-bold tracking-tight hover:scale-105 transition transform">little.harbor</a>
         
         <div class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-300">
           <a href="#home" class="hover:text-white transition hover:-translate-y-0.5 inline-block">Home</a>
@@ -130,7 +130,7 @@
 
         <div class="flex items-center">
           <a href="streetwear.html" aria-label="Shopping Bag" class="p-1.5 text-gray-300 hover:text-white hover:scale-110 transition transform">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="currentColor" viewBox="0 0 24 24">
               <path d="M16 7a4 4 0 01-8 0H4v14a2 2 0 002 2h12a2 2 0 002-2V7h-4zm-6-2a2 2 0 014 0H10zm10 16H4V9h4v2a1 1 0 002 0V9h4v2a1 1 0 002 0V9h4v12z"/>
             </svg>
           </a>
@@ -139,71 +139,71 @@
     </nav>
 
     <!-- TOMBOL EXPLORE -->
-    <div class="enter-hero-btn w-full max-w-5xl mx-auto z-10 flex-1 flex items-end pb-2 sm:pb-6 pl-2 sm:pl-8">
-      <a href="#shop" class="btn-shimmer inline-block bg-white/15 hover:bg-white/25 backdrop-blur-md text-white font-medium px-9 py-2.5 rounded-full border border-white/30 shadow-2xl transition duration-300 transform hover:scale-105 active:scale-95">
+    <div class="enter-hero-btn w-full max-w-5xl mx-auto z-10 flex-1 flex items-end pb-6 sm:pb-8 pl-2 sm:pl-8">
+      <a href="#shop" class="btn-shimmer inline-block bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-medium px-8 sm:px-9 py-2.5 rounded-full border border-white/30 shadow-2xl transition duration-300 transform hover:scale-105 active:scale-95 text-xs sm:text-sm">
         explore
       </a>
     </div>
 
-    <div class="absolute inset-0 bg-black/40 rounded-b-[40px] pointer-events-none z-0"></div>
+    <div class="absolute inset-0 bg-black/40 rounded-b-[30px] sm:rounded-b-[40px] pointer-events-none z-0"></div>
   </header>
 
   <main class="w-full space-y-0 overflow-hidden">
     
-    <!-- BANNER CAROUSEL (KANAN & KIRI DIBERI OVERLAY COMING SOON) -->
-    <section id="about" class="enter-carousel w-full relative py-16 overflow-hidden">
-      <div class="relative w-full max-w-5xl mx-auto h-[250px] sm:h-[350px] md:h-[450px] flex justify-center items-center">
-        <button id="prevBtn" onclick="prevSlide()" class="absolute left-4 z-30 bg-black/70 hover:bg-black/90 active:scale-90 text-white p-3.5 rounded-full backdrop-blur-md transition border border-white/20 hover:scale-110">❮</button>
+    <!-- BANNER CAROUSEL -->
+    <section id="about" class="enter-carousel w-full relative py-12 sm:py-16 overflow-hidden">
+      <div class="relative w-full max-w-5xl mx-auto h-[220px] sm:h-[350px] md:h-[450px] flex justify-center items-center">
+        <button id="prevBtn" onclick="prevSlide()" class="absolute left-2 sm:left-4 z-30 bg-black/70 hover:bg-black/90 active:scale-90 text-white p-2.5 sm:p-3.5 rounded-full backdrop-blur-md transition border border-white/20 text-xs sm:text-base">❮</button>
         
         <!-- BANNER KIRI: COMING SOON -->
-        <div id="banner-0" class="banner-card pos-left absolute w-[70vw] md:w-[55vw] max-w-[800px] aspect-[16/9] rounded-[30px] overflow-hidden shadow-2xl bg-[#181818] border border-white/10" onclick="cardClick(0)">
+        <div id="banner-0" class="banner-card pos-left absolute w-[80vw] sm:w-[70vw] md:w-[55vw] max-w-[800px] aspect-[16/9] rounded-[20px] sm:rounded-[30px] overflow-hidden shadow-2xl bg-[#181818] border border-white/10" onclick="cardClick(0)">
           <img src="banner-shirt-full.jpg" alt="Banner Apparel 1" class="w-full h-full object-cover opacity-40 filter blur-[1px]">
-          <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center space-y-2 p-4">
-            <span class="bg-white/20 border border-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-extrabold px-5 py-2 rounded-full uppercase tracking-widest shadow-2xl">
+          <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center space-y-2 p-2 sm:p-4">
+            <span class="bg-white/20 border border-white/30 backdrop-blur-md text-white text-[9px] sm:text-xs md:text-sm font-extrabold px-3 py-1.5 sm:px-5 sm:py-2 rounded-full uppercase tracking-widest shadow-2xl text-center">
               Series 002 • Coming Soon
             </span>
           </div>
         </div>
 
         <!-- BANNER TENGAH: ACTIVE COLLECTION -->
-        <div id="banner-1" class="banner-card pos-center absolute w-[70vw] md:w-[55vw] max-w-[800px] aspect-[16/9] rounded-[30px] overflow-hidden shadow-2xl bg-[#181818] border border-white/10" onclick="cardClick(1)">
+        <div id="banner-1" class="banner-card pos-center absolute w-[80vw] sm:w-[70vw] md:w-[55vw] max-w-[800px] aspect-[16/9] rounded-[20px] sm:rounded-[30px] overflow-hidden shadow-2xl bg-[#181818] border border-white/10" onclick="cardClick(1)">
           <img src="banner-shirt-full.jpg" alt="Banner Apparel 2" class="w-full h-full object-cover">
         </div>
 
         <!-- BANNER KANAN: COMING SOON -->
-        <div id="banner-2" class="banner-card pos-right absolute w-[70vw] md:w-[55vw] max-w-[800px] aspect-[16/9] rounded-[30px] overflow-hidden shadow-2xl bg-[#181818] border border-white/10" onclick="cardClick(2)">
+        <div id="banner-2" class="banner-card pos-right absolute w-[80vw] sm:w-[70vw] md:w-[55vw] max-w-[800px] aspect-[16/9] rounded-[20px] sm:rounded-[30px] overflow-hidden shadow-2xl bg-[#181818] border border-white/10" onclick="cardClick(2)">
           <img src="banner-shirt-full.jpg" alt="Banner Apparel 3" class="w-full h-full object-cover opacity-40 filter blur-[1px]">
-          <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center space-y-2 p-4">
-            <span class="bg-white/20 border border-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-extrabold px-5 py-2 rounded-full uppercase tracking-widest shadow-2xl">
+          <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center space-y-2 p-2 sm:p-4">
+            <span class="bg-white/20 border border-white/30 backdrop-blur-md text-white text-[9px] sm:text-xs md:text-sm font-extrabold px-3 py-1.5 sm:px-5 sm:py-2 rounded-full uppercase tracking-widest shadow-2xl text-center">
               Series 003 • Coming Soon
             </span>
           </div>
         </div>
         
-        <button id="nextBtn" onclick="nextSlide()" class="absolute right-4 z-30 bg-black/70 hover:bg-black/90 active:scale-90 text-white p-3.5 rounded-full backdrop-blur-md transition border border-white/20 hover:scale-110">❯</button>
+        <button id="nextBtn" onclick="nextSlide()" class="absolute right-2 sm:right-4 z-30 bg-black/70 hover:bg-black/90 active:scale-90 text-white p-2.5 sm:p-3.5 rounded-full backdrop-blur-md transition border border-white/20 text-xs sm:text-base">❯</button>
       </div>
     </section>
 
     <!-- SHOP SECTION -->
-    <section id="shop" class="bg-[#181818] text-white py-16 px-4 space-y-12 border-y border-white/5">
+    <section id="shop" class="bg-[#181818] text-white py-12 sm:py-16 px-4 space-y-10 sm:space-y-12 border-y border-white/5">
       
       <!-- LIVE SEARCH BAR -->
       <div class="enter-search flex justify-center relative z-40">
         <div class="search-container relative w-full max-w-2xl">
-          <div class="bg-white/10 border border-white/15 rounded-full p-2.5 sm:p-3 w-full flex items-center justify-between gap-3 shadow-2xl transition-all duration-300 focus-within:border-white/40 focus-within:scale-[1.01]">
-            <div class="bg-black/40 rounded-full px-4 py-2 flex items-center flex-1 shadow-inner border border-white/5">
-              <span class="search-icon text-gray-400 mr-2 text-lg transition-transform">🔍</span>
+          <div class="bg-white/10 border border-white/15 rounded-full p-2 sm:p-3 w-full flex items-center justify-between gap-2 sm:gap-3 shadow-2xl transition-all duration-300 focus-within:border-white/40">
+            <div class="bg-black/40 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 flex items-center flex-1 shadow-inner border border-white/5">
+              <span class="search-icon text-gray-400 mr-2 text-sm sm:text-lg">🔍</span>
               <input 
                 id="searchInput" 
                 type="text" 
-                placeholder="Search Oversized, Tote Bag, Merch, Streetwear..." 
-                class="bg-transparent w-full text-white focus:outline-none text-sm placeholder-gray-500 font-medium font-glacial"
+                placeholder="Search Oversized, Merch, Streetwear..." 
+                class="bg-transparent w-full text-white focus:outline-none text-xs sm:text-sm placeholder-gray-500 font-medium font-glacial"
                 oninput="handleSearch(this.value)"
                 onfocus="handleSearch(this.value)"
               />
-              <button id="clearSearchBtn" onclick="clearSearch()" class="hidden text-gray-400 hover:text-white font-bold text-sm px-1">✕</button>
+              <button id="clearSearchBtn" onclick="clearSearch()" class="hidden text-gray-400 hover:text-white font-bold text-xs px-1">✕</button>
             </div>
-            <button class="bg-white/15 hover:bg-white/25 active:scale-95 text-white font-bold px-7 py-2.5 rounded-full text-sm shadow-md transition duration-200 border border-white/20">Search</button>
+            <button class="bg-white/15 hover:bg-white/25 active:scale-95 text-white font-bold px-5 sm:px-7 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm shadow-md transition border border-white/20">Search</button>
           </div>
 
           <div id="searchResultsDropdown" class="hidden absolute top-full left-0 right-0 mt-3 bg-[#121212]/95 backdrop-blur-md border border-white/15 rounded-3xl p-3 shadow-2xl z-50 space-y-2 max-h-[350px] overflow-y-auto text-white transition-all duration-300"></div>
@@ -211,8 +211,8 @@
       </div>
 
       <!-- GALLERY CARDS -->
-      <div class="enter-cards grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-5xl mx-auto">
-        <a href="merch.html" class="hover-neon block relative aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl group">
+      <div class="enter-cards grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12 max-w-5xl mx-auto">
+        <a href="merch.html" class="hover-neon block relative aspect-[4/5] sm:aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl group">
           <img src="tote-bag.jpg" alt="Tote Bag Merch" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
           <div class="absolute bottom-5 left-5 right-5 z-10">
             <div class="glass-badge px-4 py-2.5 rounded-full text-center">
@@ -221,7 +221,7 @@
           </div>
         </a>
 
-        <a href="streetwear.html" class="hover-neon block relative aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl group">
+        <a href="streetwear.html" class="hover-neon block relative aspect-[4/5] sm:aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl group">
           <img src="model-shirt.jpg" alt="Streetwear Collection" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
           <div class="absolute bottom-5 left-5 right-5 z-10">
             <div class="glass-badge px-4 py-2.5 rounded-full text-center">
@@ -230,7 +230,7 @@
           </div>
         </a>
 
-        <div class="hover-neon relative aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl cursor-pointer bg-gradient-to-b from-[#1c2e24] to-[#121212] flex flex-col justify-between p-6 group">
+        <div class="hover-neon relative aspect-[4/5] sm:aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl cursor-pointer bg-gradient-to-b from-[#1c2e24] to-[#121212] flex flex-col justify-between p-6 group">
           <div class="w-full flex justify-center pt-8 z-10">
             <div class="w-24 h-16 bg-white/20 rounded-full opacity-90 shadow-md group-hover:scale-110 transition-transform duration-500 border border-white/30 backdrop-blur-md"></div>
           </div>
@@ -244,28 +244,28 @@
     </section>
 
     <!-- COMMUNITY SECTION: CLEAN EMPTY STATE BOARD -->
-    <section id="social" class="enter-social py-16 px-4 max-w-5xl mx-auto space-y-8">
+    <section id="social" class="enter-social py-12 sm:py-16 px-4 max-w-5xl mx-auto space-y-6 sm:space-y-8">
       <div class="text-center space-y-2">
-        <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Community Gallery</span>
-        <h2 class="font-heading text-2xl sm:text-4xl font-extrabold tracking-tight">#PeaceLooksGoodOnMe</h2>
+        <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-emerald-400">Community Gallery</span>
+        <h2 class="font-heading text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">#PeaceLooksGoodOnMe</h2>
       </div>
 
       <!-- GLASSMORPHISM EMPTY BOARD CALLOUT -->
-      <div class="glass-card rounded-3xl p-8 sm:p-12 text-center max-w-2xl mx-auto space-y-5 border border-white/10 shadow-2xl relative overflow-hidden group">
+      <div class="glass-card rounded-3xl p-6 sm:p-12 text-center max-w-2xl mx-auto space-y-4 sm:space-y-5 border border-white/10 shadow-2xl relative overflow-hidden group">
         
-        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center mx-auto text-2xl sm:text-3xl text-emerald-400 shadow-inner group-hover:scale-110 transition duration-500">
+        <div class="w-14 h-14 sm:w-20 sm:h-20 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center mx-auto text-xl sm:text-3xl text-emerald-400 shadow-inner group-hover:scale-110 transition duration-500">
           📸
         </div>
 
         <div class="space-y-2">
-          <h3 class="font-heading text-lg sm:text-xl font-bold text-white">Be The First To Be Featured</h3>
+          <h3 class="font-heading text-base sm:text-xl font-bold text-white">Be The First To Be Featured</h3>
           <p class="font-glacial text-xs sm:text-sm text-gray-400 max-w-md mx-auto leading-relaxed">
-            Wear your peace with pride. Tag us on Instagram <strong class="text-white">@little.harbor</strong> or use <strong class="text-emerald-400">#PeaceLooksGoodOnMe</strong> to get featured in our official community lookbook.
+            Wear your peace with pride. Tag us on Instagram <strong class="text-white">@hello.littleharbor</strong> or use <strong class="text-emerald-400">#PeaceLooksGoodOnMe</strong> to get featured in our official community lookbook.
           </p>
         </div>
 
         <div class="pt-2">
-          <a href="https://instagram.com" target="_blank" class="inline-flex items-center gap-2 bg-white text-gray-900 hover:bg-emerald-400 hover:text-black font-bold px-7 py-3 rounded-full text-xs shadow-xl transition transform hover:scale-105">
+          <a href="https://instagram.com" target="_blank" class="inline-flex items-center gap-2 bg-white text-gray-900 hover:bg-emerald-400 hover:text-black font-bold px-6 sm:px-7 py-2.5 sm:py-3 rounded-full text-xs shadow-xl transition transform hover:scale-105">
             <span>Tag Us On Instagram</span>
             <span>↗</span>
           </a>
@@ -275,55 +275,55 @@
     </section>
 
     <!-- REVISED REVIEWS / COMMUNITY FIRST WAVE SECTION -->
-    <div class="enter-reviews max-w-6xl mx-auto px-4 py-16">
-      <section id="reviews" class="relative rounded-3xl p-8 sm:p-12 bg-[#181818] border border-white/10 shadow-2xl space-y-8">
+    <div class="enter-reviews max-w-6xl mx-auto px-4 py-12 sm:py-16">
+      <section id="reviews" class="relative rounded-3xl p-6 sm:p-12 bg-[#181818] border border-white/10 shadow-2xl space-y-6 sm:space-y-8">
         
         <!-- HEADER SECTION -->
         <div class="text-center space-y-2">
-          <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Early Supporters & Philosophy</span>
-          <h2 class="font-heading text-2xl sm:text-4xl font-extrabold tracking-tight">The First Wave</h2>
+          <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-emerald-400">Early Supporters & Philosophy</span>
+          <h2 class="font-heading text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">The First Wave</h2>
           <p class="font-glacial text-xs sm:text-sm text-gray-400 max-w-md mx-auto">
             Join the movement of people carrying peace in their daily steps.
           </p>
         </div>
 
         <!-- GLASSMORPHISM CARDS GRID -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           
           <!-- Card 1: Brand Promise -->
-          <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:-translate-y-2 transition-transform duration-300 border border-white/10">
+          <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col justify-between space-y-4 border border-white/10">
             <div class="space-y-2">
-              <span class="text-2xl">🕊️</span>
-              <h3 class="font-bold text-sm text-white">Carrying Peace</h3>
+              <span class="text-xl sm:text-2xl">🕊️</span>
+              <h3 class="font-bold text-xs sm:text-sm text-white">Carrying Peace</h3>
               <p class="text-xs text-gray-300 font-glacial leading-relaxed">
                 "Peace does not mean a life without storms, but knowing He is present in every wave."
               </p>
             </div>
-            <p class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">— LITTLE HARBOR Manifesto</p>
+            <p class="text-[10px] sm:text-[11px] font-bold text-emerald-400 uppercase tracking-wider">— LITTLE HARBOR Manifesto</p>
           </div>
 
           <!-- Card 2: Quality Standard -->
-          <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:-translate-y-2 transition-transform duration-300 border border-white/10">
+          <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col justify-between space-y-4 border border-white/10">
             <div class="space-y-2">
-              <span class="text-2xl">✨</span>
-              <h3 class="font-bold text-sm text-white">Crafted With Care</h3>
+              <span class="text-xl sm:text-2xl">✨</span>
+              <h3 class="font-bold text-xs sm:text-sm text-white">Crafted With Care</h3>
               <p class="text-xs text-gray-300 font-glacial leading-relaxed">
                 "Every thread and print is tailored using premium heavyweight cotton to give you long-lasting comfort."
               </p>
             </div>
-            <p class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">— Premium Standard</p>
+            <p class="text-[10px] sm:text-[11px] font-bold text-emerald-400 uppercase tracking-wider">— Premium Standard</p>
           </div>
 
           <!-- Card 3: Invitation -->
-          <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:-translate-y-2 transition-transform duration-300 border border-white/10">
+          <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col justify-between space-y-4 border border-white/10">
             <div class="space-y-2">
-              <span class="text-2xl">⭐</span>
-              <h3 class="font-bold text-sm text-white">Be The First</h3>
+              <span class="text-xl sm:text-2xl">⭐</span>
+              <h3 class="font-bold text-xs sm:text-sm text-white">Be The First</h3>
               <p class="text-xs text-gray-300 font-glacial leading-relaxed">
                 "Order Series 001 today and be among the first supporters to share your honest review with us!"
               </p>
             </div>
-            <p class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">— Join The Harbor</p>
+            <p class="text-[10px] sm:text-[11px] font-bold text-emerald-400 uppercase tracking-wider">— Join The Harbor</p>
           </div>
 
         </div>
@@ -332,8 +332,8 @@
     </div>
   </main>
 
-  <footer id="contact" class="text-center py-12 text-xs text-gray-500 border-t border-white/10 space-y-2 font-glacial">
-    <p class="font-brand text-lg text-white">little harbor</p>
+  <footer id="contact" class="text-center py-8 sm:py-12 text-xs text-gray-500 border-t border-white/10 space-y-2 font-glacial">
+    <p class="font-brand text-base sm:text-lg text-white">little harbor</p>
     <p>&copy; 2026 LITTLE HARBOR. All rights reserved.</p>
   </footer>
 
@@ -346,7 +346,7 @@
       for (let i = 0; i < 3; i++) {
         const card = document.getElementById(`banner-${i}`);
         if (card) {
-          card.className = `banner-card ${positions[i]} absolute w-[70vw] md:w-[55vw] max-w-[800px] aspect-[16/9] rounded-[30px] overflow-hidden shadow-2xl bg-[#181818] border border-white/10`;
+          card.className = `banner-card ${positions[i]} absolute w-[80vw] sm:w-[70vw] md:w-[55vw] max-w-[800px] aspect-[16/9] rounded-[20px] sm:rounded-[30px] overflow-hidden shadow-2xl bg-[#181818] border border-white/10`;
         }
       }
     }
@@ -422,14 +422,14 @@
         results.forEach(item => {
           const itemHTML = `
             <a href="${item.link}" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-white/10 transition group border border-transparent hover:border-white/10">
-              <div class="w-12 h-12 rounded-xl bg-black/60 p-1 flex items-center justify-center shrink-0 overflow-hidden border border-white/10">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-black/60 p-1 flex items-center justify-center shrink-0 overflow-hidden border border-white/10">
                 <img src="${item.image}" alt="${item.name}" class="w-full h-full object-contain group-hover:scale-110 transition duration-300">
               </div>
               <div class="flex-1 min-w-0">
                 <h4 class="font-bold text-xs text-white truncate group-hover:text-emerald-400 transition">${item.name}</h4>
                 <p class="text-[10px] text-gray-400 font-glacial">${item.category}</p>
               </div>
-              <span class="text-xs font-bold text-emerald-400 px-2.5 py-1 bg-emerald-500/10 rounded-lg shrink-0 border border-emerald-500/20">${item.price}</span>
+              <span class="text-[10px] sm:text-xs font-bold text-emerald-400 px-2 py-0.5 sm:px-2.5 sm:py-1 bg-emerald-500/10 rounded-lg shrink-0 border border-emerald-500/20">${item.price}</span>
             </a>
           `;
           dropdown.innerHTML += itemHTML;
