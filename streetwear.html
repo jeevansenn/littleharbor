@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LITTLE HARBOR - Streetwear Collection</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts & Glacial Indifference -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/glacial-indifference" rel="stylesheet">
+
+  <style>
+    /* ANIMASI MASUK BERTIENGKAT (STAGGERED ENTRANCE ANIMATIONS) */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Floating Effect Navbar */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .font-brand { font-family: 'Fredoka', cursive; }
+    .font-heading { font-family: 'Montserrat', sans-serif; }
+    .font-glacial { font-family: 'Glacial Indifference', sans-serif; font-weight: 400; }
+
+    /* Penerapan Delay Animasi */
+    .anim-nav { animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .anim-hero { animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both; }
+    .anim-carousel { animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both; }
+    .anim-search { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both; }
+    .anim-cards { animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both; }
+    .animate-float { animation: floatSlow 4s ease-in-out infinite; }
+  </style>
+</head>
+<body class="bg-[#121212] text-white min-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8">
+
+  <!-- FLOATING NAVBAR -->
+  <header class="anim-nav w-full max-w-[1400px] mx-auto z-20 pb-4">
+    <nav class="animate-float bg-black/60 backdrop-blur-md rounded-full px-6 py-3 flex items-center justify-between shadow-2xl border border-white/20">
+      <!-- Logo Brand -->
+      <a href="index.html" class="font-brand text-white text-lg md:text-xl font-bold tracking-tight hover:scale-105 transition transform">little.harbor</a>
+      
+      <!-- Nav Links -->
+      <div class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-300">
+        <a href="index.html#home" class="hover:text-white transition">Home</a>
+        <a href="streetwear.html" class="text-white font-bold border-b border-emerald-400 pb-0.5">Streetwear</a>
+        <a href="merch.html" class="hover:text-white transition">Merch & Goods</a>
+      </div>
+
+      <!-- Right Quick Action -->
+      <div class="flex items-center space-x-3 text-xs">
+        <a href="fashion-detail.html" class="bg-white/10 hover:bg-white/20 backdrop-blur-md px-4 py-2 rounded-full font-semibold transition">
+          Shop Collection →
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="anim-hero w-full max-w-[1400px] mx-auto text-center py-6 space-y-3">
+    <p class="text-xs font-semibold tracking-widest text-red-400 uppercase">Category • Streetwear Collection</p>
+    <h1 class="font-heading text-4xl sm:text-6xl font-black tracking-tight leading-none">
+      PEACE LOOKS GOOD ON ME
+    </h1>
+    <p class="font-glacial text-sm sm:text-base text-gray-400 max-w-xl mx-auto">
+      Carry the peace of Jehovah Shalom wherever you go. A timeless streetwear collection designed with meaning and precision.
+    </p>
+  </section>
+
+  <!-- 3D CAROUSEL BANNER SECTION -->
+  <section class="anim-carousel w-full max-w-[1200px] mx-auto my-6 relative">
+    <a href="fashion-detail.html" class="block group relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl transition transform hover:scale-[1.01]">
+      <div class="aspect-[16/9] w-full bg-gray-900 relative overflow-hidden">
+        <img src="banner-shirt-full.jpg" alt="LITTLE HARBOR Banner" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6 sm:p-10">
+          <div>
+            <span class="bg-white/20 backdrop-blur-md text-white text-[10px] sm:text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">Featured Collection</span>
+            <h3 class="font-heading text-xl sm:text-3xl font-extrabold mt-2">Jehovah Shalom Oversized Tee</h3>
+            <p class="text-xs sm:text-sm text-gray-300 font-glacial mt-1">Tap to explore details, color variants & size guide →</p>
+          </div>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <!-- DARK THEME SEARCH BAR SECTION -->
+  <section class="anim-search w-full max-w-[600px] mx-auto my-4">
+    <div class="bg-white/10 border border-white/15 rounded-full p-2 w-full flex items-center justify-between gap-3 shadow-2xl transition-all focus-within:border-white/40">
+      <div class="bg-black/40 rounded-full px-4 py-2 flex items-center flex-1 border border-white/5">
+        <span class="mr-3 text-gray-400 text-sm">🔍</span>
+        <input type="text" placeholder="Search Oversized, Hoodie, Accessories..." class="bg-transparent w-full text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none font-glacial">
+      </div>
+      <button class="bg-white/15 hover:bg-white/25 active:scale-95 text-white font-bold px-5 py-2 rounded-full text-xs shadow-md transition border border-white/20">Search</button>
+    </div>
+  </section>
+
+  <!-- 4 CATEGORY CARDS SECTION -->
+  <section class="anim-cards w-full max-w-[1400px] mx-auto my-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+    
+    <!-- Card 1 (Series 001 Active - FULL RECTANGLE BACKGROUND IMAGE) -->
+    <a href="fashion-detail.html" class="group relative rounded-2xl p-4 transition flex flex-col justify-between h-44 overflow-hidden border border-white/15 hover:border-white/40 shadow-xl">
+      <!-- Full Rectangle Background Image -->
+      <img src="banner-shirt-full.jpg" alt="Oversized Tee Preview" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-500">
+      
+      <!-- Overlay Gradient agar teks di atasnya tetap tajam & kontras -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/30 group-hover:from-black/80 transition duration-300"></div>
+
+      <!-- Content -->
+      <div class="flex justify-between items-start z-10">
+        <span class="text-xs font-bold uppercase text-gray-300 group-hover:text-white transition">01</span>
+        <span class="text-xs text-red-400 font-extrabold bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-full border border-red-500/30">$7</span>
+      </div>
+      <div class="z-10">
+        <h4 class="font-heading font-bold text-sm sm:text-base text-white">Oversized Tee</h4>
+        <p class="text-[11px] text-gray-300 font-glacial">Series 001 • 4 Colors Available</p>
+      </div>
+    </a>
+
+    <!-- Card 2 -->
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col justify-between h-44 opacity-50">
+      <div class="flex justify-between items-start">
+        <span class="text-xs font-bold uppercase text-gray-400">02</span>
+        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded-full font-bold">SOON</span>
+      </div>
+      <div>
+        <h4 class="font-heading font-bold text-sm sm:text-base">Crewneck</h4>
+        <p class="text-[11px] text-gray-400 font-glacial">Coming Soon</p>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col justify-between h-44 opacity-50">
+      <div class="flex justify-between items-start">
+        <span class="text-xs font-bold uppercase text-gray-400">03</span>
+        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded-full font-bold">SOON</span>
+      </div>
+      <div>
+        <h4 class="font-heading font-bold text-sm sm:text-base">Hoodie</h4>
+        <p class="text-[11px] text-gray-400 font-glacial">Coming Soon</p>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col justify-between h-44 opacity-50">
+      <div class="flex justify-between items-start">
+        <span class="text-xs font-bold uppercase text-gray-400">04</span>
+        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded-full font-bold">SOON</span>
+      </div>
+      <div>
+        <h4 class="font-heading font-bold text-sm sm:text-base">Merch & Bags</h4>
+        <p class="text-[11px] text-gray-400 font-glacial">Coming Soon</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="text-center text-xs opacity-50 py-4 font-glacial">
+    &copy; 2026 LITTLE HARBOR. All rights reserved.
+  </footer>
+
+</body>
+</html>

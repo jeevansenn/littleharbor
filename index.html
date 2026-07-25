@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LITTLE HARBOR - Peace Looks Good On Me</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts & Glacial Indifference -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/glacial-indifference" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+    }
+    .font-brand { font-family: 'Fredoka', cursive; }
+    .font-heading { font-family: 'Montserrat', sans-serif; }
+    .font-glacial { font-family: 'Glacial Indifference', sans-serif; font-weight: 400; }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    .glass-badge {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* === ANIMASI TRANSISI MASUK === */
+    @keyframes slideDownIn {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUpIn {
+      from { opacity: 0; transform: translateY(35px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .enter-nav { animation: slideDownIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .enter-hero-btn { animation: slideUpIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+    .enter-carousel { animation: slideUpIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both; }
+    .enter-search { animation: slideUpIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both; }
+    .enter-cards { animation: slideUpIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both; }
+    .enter-social { animation: slideUpIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.75s both; }
+    .enter-reviews { animation: slideUpIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.85s both; }
+
+    /* Floating Effect Navbar */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+    .animate-float { animation: floatSlow 4s ease-in-out infinite; }
+
+    /* Shimmer Effect Tombol Explore */
+    @keyframes shimmerSwipe {
+      0% { transform: translateX(-150%) rotate(25deg); }
+      20%, 100% { transform: translateX(250%) rotate(25deg); }
+    }
+    .btn-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shimmer::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 60%;
+      height: 200%;
+      background: linear-gradient(
+        to right,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.3) 50%,
+        rgba(255,255,255,0) 100%
+      );
+      animation: shimmerSwipe 5s infinite ease-in-out;
+    }
+
+    /* Hover Neon Cards */
+    .hover-neon { 
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+      will-change: transform;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .hover-neon:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: #70e000 !important;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(112, 224, 0, 0.4);
+    }
+
+    /* Banner Carousel Posisi */
+    .banner-card { 
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease;
+      will-change: transform, opacity;
+    }
+    .banner-card img { transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
+    .banner-card:hover img { transform: scale(1.06); }
+    
+    .pos-center { transform: translateX(0) scale(1.05); z-index: 20; opacity: 1; pointer-events: auto; }
+    .pos-left { transform: translateX(-60%) scale(0.85); z-index: 10; opacity: 0.5; cursor: pointer; }
+    .pos-right { transform: translateX(60%) scale(0.85); z-index: 10; opacity: 0.5; cursor: pointer; }
+  </style>
+</head>
+<body class="bg-[#121212] text-white antialiased overflow-x-hidden">
+
+  <!-- HERO SECTION -->
+  <header id="home" class="relative w-full h-screen min-h-[600px] bg-cover bg-center flex flex-col justify-between p-6 md:p-10 rounded-b-[40px] shadow-2xl overflow-hidden border-b border-white/10" style="background-image: url('banner-cat-pond.jpg');">
+    
+    <!-- NAVBAR (NAVBAR KANAN DIKEMBALIKAN KE SHOPPING BAG) -->
+    <nav class="enter-nav w-full max-w-5xl mx-auto z-20 relative">
+      <div class="animate-float bg-black/60 backdrop-blur-md rounded-full px-6 py-3 flex items-center justify-between shadow-2xl border border-white/20">
+        <a href="#home" class="font-brand text-white text-lg md:text-xl font-bold tracking-tight hover:scale-105 transition transform">little.harbor</a>
+        
+        <div class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-300">
+          <a href="#home" class="hover:text-white transition hover:-translate-y-0.5 inline-block">Home</a>
+          <a href="#about" class="hover:text-white transition hover:-translate-y-0.5 inline-block">about</a>
+          <a href="#shop" class="hover:text-white transition hover:-translate-y-0.5 inline-block">shop</a>
+          <a href="#social" class="hover:text-white transition hover:-translate-y-0.5 inline-block">community</a>
+          <a href="#reviews" class="hover:text-white transition hover:-translate-y-0.5 inline-block">philosophy</a>
+        </div>
+
+        <div class="flex items-center">
+          <a href="streetwear.html" aria-label="Shopping Bag" class="p-1.5 text-gray-300 hover:text-white hover:scale-110 transition transform">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M16 7a4 4 0 01-8 0H4v14a2 2 0 002 2h12a2 2 0 002-2V7h-4zm-6-2a2 2 0 014 0H10zm10 16H4V9h4v2a1 1 0 002 0V9h4v2a1 1 0 002 0V9h4v12z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- TOMBOL EXPLORE -->
+    <div class="enter-hero-btn w-full max-w-5xl mx-auto z-10 flex-1 flex items-end pb-2 sm:pb-6 pl-2 sm:pl-8">
+      <a href="#shop" class="btn-shimmer inline-block bg-white/15 hover:bg-white/25 backdrop-blur-md text-white font-medium px-9 py-2.5 rounded-full border border-white/30 shadow-2xl transition duration-300 transform hover:scale-105 active:scale-95">
+        explore
+      </a>
+    </div>
+
+    <div class="absolute inset-0 bg-black/40 rounded-b-[40px] pointer-events-none z-0"></div>
+  </header>
+
+  <main class="w-full space-y-0 overflow-hidden">
+    
+    <!-- BANNER CAROUSEL (KANAN & KIRI DIBERI OVERLAY COMING SOON) -->
+    <section id="about" class="enter-carousel w-full relative py-16 overflow-hidden">
+      <div class="relative w-full max-w-5xl mx-auto h-[250px] sm:h-[350px] md:h-[450px] flex justify-center items-center">
+        <button id="prevBtn" onclick="prevSlide()" class="absolute left-4 z-30 bg-black/70 hover:bg-black/90 active:scale-90 text-white p-3.5 rounded-full backdrop-blur-md transition border border-white/20 hover:scale-110">❮</button>
+        
+        <!-- BANNER KIRI: COMING SOON -->
+        <div id="banner-0" class="banner-card pos-left absolute w-[70vw] md:w-[55vw] max-w-[800px] aspect-[16/9] rounded-[30px] overflow-hidden shadow-2xl bg-[#181818] border border-white/10" onclick="cardClick(0)">
+          <img src="banner-shirt-full.jpg" alt="Banner Apparel 1" class="w-full h-full object-cover opacity-40 filter blur-[1px]">
+          <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center space-y-2 p-4">
+            <span class="bg-white/20 border border-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-extrabold px-5 py-2 rounded-full uppercase tracking-widest shadow-2xl">
+              Series 002 • Coming Soon
+            </span>
+          </div>
+        </div>
+
+        <!-- BANNER TENGAH: ACTIVE COLLECTION -->
+        <div id="banner-1" class="banner-card pos-center absolute w-[70vw] md:w-[55vw] max-w-[800px] aspect-[16/9] rounded-[30px] overflow-hidden shadow-2xl bg-[#181818] border border-white/10" onclick="cardClick(1)">
+          <img src="banner-shirt-full.jpg" alt="Banner Apparel 2" class="w-full h-full object-cover">
+        </div>
+
+        <!-- BANNER KANAN: COMING SOON -->
+        <div id="banner-2" class="banner-card pos-right absolute w-[70vw] md:w-[55vw] max-w-[800px] aspect-[16/9] rounded-[30px] overflow-hidden shadow-2xl bg-[#181818] border border-white/10" onclick="cardClick(2)">
+          <img src="banner-shirt-full.jpg" alt="Banner Apparel 3" class="w-full h-full object-cover opacity-40 filter blur-[1px]">
+          <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center space-y-2 p-4">
+            <span class="bg-white/20 border border-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-extrabold px-5 py-2 rounded-full uppercase tracking-widest shadow-2xl">
+              Series 003 • Coming Soon
+            </span>
+          </div>
+        </div>
+        
+        <button id="nextBtn" onclick="nextSlide()" class="absolute right-4 z-30 bg-black/70 hover:bg-black/90 active:scale-90 text-white p-3.5 rounded-full backdrop-blur-md transition border border-white/20 hover:scale-110">❯</button>
+      </div>
+    </section>
+
+    <!-- SHOP SECTION -->
+    <section id="shop" class="bg-[#181818] text-white py-16 px-4 space-y-12 border-y border-white/5">
+      
+      <!-- LIVE SEARCH BAR -->
+      <div class="enter-search flex justify-center relative z-40">
+        <div class="search-container relative w-full max-w-2xl">
+          <div class="bg-white/10 border border-white/15 rounded-full p-2.5 sm:p-3 w-full flex items-center justify-between gap-3 shadow-2xl transition-all duration-300 focus-within:border-white/40 focus-within:scale-[1.01]">
+            <div class="bg-black/40 rounded-full px-4 py-2 flex items-center flex-1 shadow-inner border border-white/5">
+              <span class="search-icon text-gray-400 mr-2 text-lg transition-transform">🔍</span>
+              <input 
+                id="searchInput" 
+                type="text" 
+                placeholder="Search Oversized, Tote Bag, Merch, Streetwear..." 
+                class="bg-transparent w-full text-white focus:outline-none text-sm placeholder-gray-500 font-medium font-glacial"
+                oninput="handleSearch(this.value)"
+                onfocus="handleSearch(this.value)"
+              />
+              <button id="clearSearchBtn" onclick="clearSearch()" class="hidden text-gray-400 hover:text-white font-bold text-sm px-1">✕</button>
+            </div>
+            <button class="bg-white/15 hover:bg-white/25 active:scale-95 text-white font-bold px-7 py-2.5 rounded-full text-sm shadow-md transition duration-200 border border-white/20">Search</button>
+          </div>
+
+          <div id="searchResultsDropdown" class="hidden absolute top-full left-0 right-0 mt-3 bg-[#121212]/95 backdrop-blur-md border border-white/15 rounded-3xl p-3 shadow-2xl z-50 space-y-2 max-h-[350px] overflow-y-auto text-white transition-all duration-300"></div>
+        </div>
+      </div>
+
+      <!-- GALLERY CARDS -->
+      <div class="enter-cards grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-5xl mx-auto">
+        <a href="merch.html" class="hover-neon block relative aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl group">
+          <img src="tote-bag.jpg" alt="Tote Bag Merch" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute bottom-5 left-5 right-5 z-10">
+            <div class="glass-badge px-4 py-2.5 rounded-full text-center">
+              <span class="font-brand tracking-widest uppercase text-xs font-semibold text-white">Merch & Goods</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="streetwear.html" class="hover-neon block relative aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl group">
+          <img src="model-shirt.jpg" alt="Streetwear Collection" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute bottom-5 left-5 right-5 z-10">
+            <div class="glass-badge px-4 py-2.5 rounded-full text-center">
+              <span class="font-brand tracking-widest uppercase text-xs font-semibold text-white">Streetwear</span>
+            </div>
+          </div>
+        </a>
+
+        <div class="hover-neon relative aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl cursor-pointer bg-gradient-to-b from-[#1c2e24] to-[#121212] flex flex-col justify-between p-6 group">
+          <div class="w-full flex justify-center pt-8 z-10">
+            <div class="w-24 h-16 bg-white/20 rounded-full opacity-90 shadow-md group-hover:scale-110 transition-transform duration-500 border border-white/30 backdrop-blur-md"></div>
+          </div>
+          <div class="w-full z-10">
+            <div class="glass-badge px-4 py-2.5 rounded-full text-center">
+              <span class="font-brand tracking-widest uppercase text-xs font-semibold text-white">New Collection</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY SECTION: CLEAN EMPTY STATE BOARD -->
+    <section id="social" class="enter-social py-16 px-4 max-w-5xl mx-auto space-y-8">
+      <div class="text-center space-y-2">
+        <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Community Gallery</span>
+        <h2 class="font-heading text-2xl sm:text-4xl font-extrabold tracking-tight">#PeaceLooksGoodOnMe</h2>
+      </div>
+
+      <!-- GLASSMORPHISM EMPTY BOARD CALLOUT -->
+      <div class="glass-card rounded-3xl p-8 sm:p-12 text-center max-w-2xl mx-auto space-y-5 border border-white/10 shadow-2xl relative overflow-hidden group">
+        
+        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center mx-auto text-2xl sm:text-3xl text-emerald-400 shadow-inner group-hover:scale-110 transition duration-500">
+          📸
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="font-heading text-lg sm:text-xl font-bold text-white">Be The First To Be Featured</h3>
+          <p class="font-glacial text-xs sm:text-sm text-gray-400 max-w-md mx-auto leading-relaxed">
+            Wear your peace with pride. Tag us on Instagram <strong class="text-white">@little.harbor</strong> or use <strong class="text-emerald-400">#PeaceLooksGoodOnMe</strong> to get featured in our official community lookbook.
+          </p>
+        </div>
+
+        <div class="pt-2">
+          <a href="https://instagram.com" target="_blank" class="inline-flex items-center gap-2 bg-white text-gray-900 hover:bg-emerald-400 hover:text-black font-bold px-7 py-3 rounded-full text-xs shadow-xl transition transform hover:scale-105">
+            <span>Tag Us On Instagram</span>
+            <span>↗</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- REVISED REVIEWS / COMMUNITY FIRST WAVE SECTION -->
+    <div class="enter-reviews max-w-6xl mx-auto px-4 py-16">
+      <section id="reviews" class="relative rounded-3xl p-8 sm:p-12 bg-[#181818] border border-white/10 shadow-2xl space-y-8">
+        
+        <!-- HEADER SECTION -->
+        <div class="text-center space-y-2">
+          <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Early Supporters & Philosophy</span>
+          <h2 class="font-heading text-2xl sm:text-4xl font-extrabold tracking-tight">The First Wave</h2>
+          <p class="font-glacial text-xs sm:text-sm text-gray-400 max-w-md mx-auto">
+            Join the movement of people carrying peace in their daily steps.
+          </p>
+        </div>
+
+        <!-- GLASSMORPHISM CARDS GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Card 1: Brand Promise -->
+          <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:-translate-y-2 transition-transform duration-300 border border-white/10">
+            <div class="space-y-2">
+              <span class="text-2xl">🕊️</span>
+              <h3 class="font-bold text-sm text-white">Carrying Peace</h3>
+              <p class="text-xs text-gray-300 font-glacial leading-relaxed">
+                "Peace does not mean a life without storms, but knowing He is present in every wave."
+              </p>
+            </div>
+            <p class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">— LITTLE HARBOR Manifesto</p>
+          </div>
+
+          <!-- Card 2: Quality Standard -->
+          <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:-translate-y-2 transition-transform duration-300 border border-white/10">
+            <div class="space-y-2">
+              <span class="text-2xl">✨</span>
+              <h3 class="font-bold text-sm text-white">Crafted With Care</h3>
+              <p class="text-xs text-gray-300 font-glacial leading-relaxed">
+                "Every thread and print is tailored using premium heavyweight cotton to give you long-lasting comfort."
+              </p>
+            </div>
+            <p class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">— Premium Standard</p>
+          </div>
+
+          <!-- Card 3: Invitation -->
+          <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:-translate-y-2 transition-transform duration-300 border border-white/10">
+            <div class="space-y-2">
+              <span class="text-2xl">⭐</span>
+              <h3 class="font-bold text-sm text-white">Be The First</h3>
+              <p class="text-xs text-gray-300 font-glacial leading-relaxed">
+                "Order Series 001 today and be among the first supporters to share your honest review with us!"
+              </p>
+            </div>
+            <p class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">— Join The Harbor</p>
+          </div>
+
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <footer id="contact" class="text-center py-12 text-xs text-gray-500 border-t border-white/10 space-y-2 font-glacial">
+    <p class="font-brand text-lg text-white">little harbor</p>
+    <p>&copy; 2026 LITTLE HARBOR. All rights reserved.</p>
+  </footer>
+
+  <!-- SCRIPT UTAMA -->
+  <script>
+    // 1. CAROUSEL BANNER SCRIPT
+    let positions = ['pos-left', 'pos-center', 'pos-right'];
+
+    function updatePositions() {
+      for (let i = 0; i < 3; i++) {
+        const card = document.getElementById(`banner-${i}`);
+        if (card) {
+          card.className = `banner-card ${positions[i]} absolute w-[70vw] md:w-[55vw] max-w-[800px] aspect-[16/9] rounded-[30px] overflow-hidden shadow-2xl bg-[#181818] border border-white/10`;
+        }
+      }
+    }
+
+    function nextSlide() { positions.unshift(positions.pop()); updatePositions(); }
+    function prevSlide() { positions.push(positions.shift()); updatePositions(); }
+    function cardClick(index) {
+      if (positions[index] === 'pos-left') prevSlide();
+      else if (positions[index] === 'pos-right') nextSlide();
+    }
+
+    // 2. LIVE SEARCH SCRIPT
+    const productsDatabase = [
+      {
+        name: "Peace Looks Good On Me Tee",
+        category: "Streetwear • Oversized",
+        price: "$7",
+        keywords: ["oversized", "streetwear", "shirt", "jehovah", "peace", "black", "green", "grey", "cream", "001"],
+        image: "shirt-black.png",
+        link: "fashion-detail.html"
+      },
+      {
+        name: "Heavyweight Canvas Tote Bag",
+        category: "Merch • Essential",
+        price: "$5",
+        keywords: ["tote", "bag", "merch", "accessories", "canvas", "goods"],
+        image: "totebagmerch.jpg",
+        link: "merch.html"
+      },
+      {
+        name: "Urban Streetwear Collection",
+        category: "Category Page",
+        price: "Catalog",
+        keywords: ["streetwear", "collection", "apparel", "hoodie", "crewneck"],
+        image: "model-shirt.jpg",
+        link: "streetwear.html"
+      }
+    ];
+
+    function handleSearch(query) {
+      const dropdown = document.getElementById('searchResultsDropdown');
+      const clearBtn = document.getElementById('clearSearchBtn');
+      const cleanQuery = query.trim().toLowerCase();
+
+      if (cleanQuery.length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+        dropdown.classList.add('hidden');
+        return;
+      }
+
+      const filteredResults = productsDatabase.filter(product => {
+        return product.name.toLowerCase().includes(cleanQuery) ||
+               product.category.toLowerCase().includes(cleanQuery) ||
+               product.keywords.some(kw => kw.includes(cleanQuery));
+      });
+
+      renderDropdownResults(filteredResults);
+    }
+
+    function renderDropdownResults(results) {
+      const dropdown = document.getElementById('searchResultsDropdown');
+      dropdown.innerHTML = '';
+
+      if (results.length === 0) {
+        dropdown.innerHTML = `
+          <div class="p-4 text-center text-xs text-gray-400 font-medium">
+            🔍 No collection found matching your search.
+          </div>
+        `;
+      } else {
+        results.forEach(item => {
+          const itemHTML = `
+            <a href="${item.link}" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-white/10 transition group border border-transparent hover:border-white/10">
+              <div class="w-12 h-12 rounded-xl bg-black/60 p-1 flex items-center justify-center shrink-0 overflow-hidden border border-white/10">
+                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-contain group-hover:scale-110 transition duration-300">
+              </div>
+              <div class="flex-1 min-w-0">
+                <h4 class="font-bold text-xs text-white truncate group-hover:text-emerald-400 transition">${item.name}</h4>
+                <p class="text-[10px] text-gray-400 font-glacial">${item.category}</p>
+              </div>
+              <span class="text-xs font-bold text-emerald-400 px-2.5 py-1 bg-emerald-500/10 rounded-lg shrink-0 border border-emerald-500/20">${item.price}</span>
+            </a>
+          `;
+          dropdown.innerHTML += itemHTML;
+        });
+      }
+
+      dropdown.classList.remove('hidden');
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('searchInput');
+      input.value = '';
+      handleSearch('');
+      input.focus();
+    }
+
+    document.addEventListener('click', function(e) {
+      const searchContainer = document.querySelector('.search-container');
+      const dropdown = document.getElementById('searchResultsDropdown');
+      if (searchContainer && !searchContainer.contains(e.target) && dropdown) {
+        dropdown.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LITTLE HARBOR - Peace Looks Good On Me</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts & Glacial Indifference -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/glacial-indifference" rel="stylesheet">
+
+  <style>
+    /* === CUSTOM GLOW CURSOR STYLES === */
+    @media (min-width: 768px) {
+      body, a, button, input, textarea {
+        cursor: none !important; /* Sembunyikan kursor bawaan di layar desktop */
+      }
+    }
+
+    #cursor-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background-color 0.2s;
+    }
+
+    #cursor-ring {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(2px);
+      border-radius: 50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                  height 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.3s, 
+                  background 0.3s;
+    }
+
+    /* Efek Kursor saat Hover elemen interaktif */
+    .cursor-hover #cursor-ring {
+      width: 55px;
+      height: 55px;
+      border-color: #70e000;
+      background: rgba(112, 224, 0, 0.15);
+      box-shadow: 0 0 25px rgba(112, 224, 0, 0.4);
+    }
+    .cursor-hover #cursor-dot {
+      background-color: #70e000;
+      width: 10px;
+      height: 10px;
+    }
+
+    /* === ANIMASI DAN LAYOUT UTAMA === */
+    @keyframes pageEnter {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes shirtEnter {
+      from { opacity: 0; transform: translateY(25px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes heartPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes drawLineFromLeft {
+      from { stroke-dashoffset: 400; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes dotPop {
+      0% { opacity: 0; transform: scale(0); }
+      70% { transform: scale(1.4); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes auraPulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(2.2); opacity: 0; }
+      100% { transform: scale(1); opacity: 0; }
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+      animation: pageEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    .font-heading { font-family: 'Montserrat', sans-serif; }
+    .font-glacial { font-family: 'Glacial Indifference', sans-serif; font-weight: 400; }
+
+    .product-img {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: shirtEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+    .animate-heart {
+      animation: heartPop 0.3s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+    }
+
+    .animated-callout-line {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      animation: drawLineFromLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    }
+
+    .start-dot {
+      opacity: 0;
+      transform-origin: 15px 95px;
+      animation: dotPop 0.3s cubic-bezier(0.17, 0.89, 0.32, 1.49) 0.15s forwards;
+    }
+
+    .end-dot {
+      opacity: 0;
+      transform-origin: 200px 10px;
+      animation: dotPop 0.3s cubic-bezier(0.17, 0.89, 0.32, 1.49) 0.9s forwards;
+    }
+
+    .dot-pulse-ring {
+      transform-origin: 15px 95px;
+      animation: auraPulse 1.8s infinite ease-out 0.5s;
+    }
+  </style>
+</head>
+<body id="pageBg" class="bg-[#121212] text-white min-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 transition-colors duration-500 overflow-x-hidden" onload="initPage()">
+
+  <!-- ELEMENT CUSTOM GLOW CURSOR -->
+  <div id="cursor-dot" class="hidden md:block"></div>
+  <div id="cursor-ring" class="hidden md:block"></div>
+
+  <!-- TOP NAVBAR -->
+  <header class="w-full max-w-[1400px] mx-auto flex items-center justify-between pb-2 shrink-0">
+    <a href="streetwear.html" class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-xs font-semibold transition">
+      <span>← Back to Streetwear</span>
+    </a>
+
+    <!-- Top Product Type Selector Bar -->
+    <div class="hidden md:flex items-center space-x-2 bg-black/20 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 text-xs font-medium tracking-wide">
+      <button id="type-oversized" onclick="selectProductType('OVERSIZED')" class="bg-white/20 text-white px-4 py-1.5 rounded-full font-bold shadow-sm transition">OVERSIZED</button>
+      <button id="type-crewneck" onclick="selectProductType('CREWNECK')" class="text-white/70 hover:text-white px-4 py-1.5 rounded-full transition">CREWNECK</button>
+      <button id="type-hoodie" onclick="selectProductType('HOODIE')" class="text-white/70 hover:text-white px-4 py-1.5 rounded-full transition">HOODIE</button>
+    </div>
+
+    <!-- Right Quick Icons + CURRENCY SWITCHER + SHARE BUTTON -->
+    <div class="flex items-center space-x-3 text-xs">
+      <div class="bg-white/10 border border-white/20 backdrop-blur-md rounded-full p-0.5 flex items-center text-[10px] sm:text-xs font-bold">
+        <button id="curr-usd" onclick="setCurrency('USD')" class="px-2.5 py-1 rounded-full bg-white text-black transition">USD $</button>
+        <button id="curr-idr" onclick="setCurrency('IDR')" class="px-2.5 py-1 rounded-full text-gray-300 hover:text-white transition">IDR Rp</button>
+      </div>
+
+      <button onclick="shareProduct()" title="Share Product" class="p-2.5 bg-white/10 hover:bg-white/20 rounded-full transition flex items-center justify-center text-sm">
+        🔗
+      </button>
+
+      <button onclick="toggleCart()" class="p-2.5 bg-white/10 hover:bg-white/20 rounded-full transition relative">
+        🛒 <span id="cartBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+      </button>
+
+      <button id="loveBtn" onclick="toggleLove()" class="p-2.5 bg-white/10 hover:bg-white/20 rounded-full transition flex items-center justify-center">
+        <span id="loveIcon" class="text-sm">♡</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- NOTIFIKASI FLOATING TOAST -->
+  <div id="toastNotice" class="fixed top-16 left-1/2 transform -translate-x-1/2 bg-black/90 border border-white/20 backdrop-blur-md text-white text-xs font-bold px-6 py-2.5 rounded-full shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2">
+    <span>✨</span> <span id="toastText">Notice</span>
+  </div>
+
+  <!-- MAIN PRODUCT CONTENT CONTAINER -->
+  <main class="w-full max-w-[1400px] mx-auto my-auto py-2 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-center flex-1">
+    
+    <!-- LEFT COLUMN -->
+    <div class="lg:col-span-3 space-y-4 z-10">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold tracking-widest text-red-400 uppercase">Series 001</p>
+        <h2 class="text-lg font-extrabold tracking-wide">Jehovah Shalom</h2>
+        <h1 class="font-heading text-3xl md:text-4xl font-extrabold leading-tight">
+          Peace Looks<br>Good On Me
+        </h1>
+      </div>
+
+      <div class="space-y-2 text-xs sm:text-sm opacity-90 leading-relaxed font-light">
+        <p>
+          <strong class="font-semibold opacity-100">Jehovah Shalom</strong> means "The Lord is Peace." This series is a reminder that true peace does not come from having a perfect life, but from knowing God is with us through it all.
+        </p>
+        <p>
+          <em class="italic">Peace looks good on you</em> is an invitation to carry His peace wherever you go—walk with a calm heart and trust His plans.
+        </p>
+      </div>
+
+      <div class="pt-2">
+        <button onclick="addToBag()" class="bg-white text-gray-900 font-bold px-7 py-3 rounded-full text-xs shadow-xl hover:bg-opacity-90 transition transform hover:scale-105 flex items-center space-x-2">
+          <span>+ Add to Bag</span>
+          <span>></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- CENTER COLUMN (FOTO BAJU) -->
+    <div class="lg:col-span-6 flex justify-center items-center relative my-2 lg:my-0">
+      <div class="relative w-full max-w-2xl flex items-center justify-center">
+        <div id="glowCircle" class="absolute w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] rounded-full bg-white/10 blur-3xl transition-all duration-500"></div>
+        
+        <img 
+          id="productImage" 
+          src="shirt-black.png" 
+          alt="Peace Looks Good On Me T-Shirt" 
+          class="product-img relative z-10 w-full h-auto max-h-[65vh] sm:max-h-[75vh] object-contain drop-shadow-2xl transform hover:scale-105 transition duration-300"
+        />
+
+        <!-- CALLOUT LINE -->
+        <div class="hidden md:block absolute top-[28%] right-[-6%] lg:right-[-2%] z-20 pointer-events-none">
+          <div class="relative flex flex-col items-end">
+            <span class="font-glacial text-sm md:text-base tracking-wide text-white drop-shadow-md pr-2 pb-1">
+              Premium Combed
+            </span>
+            <svg width="220" height="120" viewBox="0 0 220 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-lg overflow-visible">
+              <path 
+                d="M 15 95 L 80 10 L 200 10" 
+                stroke="white" 
+                stroke-width="2.5" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"
+                class="animated-callout-line"
+              />
+              <circle cx="15" cy="95" r="8" fill="white" class="dot-pulse-ring opacity-40" />
+              <circle cx="15" cy="95" r="5" fill="white" class="start-dot" />
+              <circle cx="200" cy="10" r="4" fill="white" class="end-dot" />
+            </svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="lg:col-span-3 space-y-6 flex flex-col justify-center items-start lg:items-end text-left lg:text-right z-10">
+      <div>
+        <div class="flex items-baseline space-x-3 lg:justify-end">
+          <span id="priceText" class="text-3xl font-extrabold">$7</span>
+          <span id="oldPriceText" class="text-sm line-through opacity-50">$10</span>
+        </div>
+      </div>
+
+      <!-- PILIHAN UKURAN -->
+      <div class="space-y-2 w-full">
+        <span class="text-xs uppercase tracking-wider font-semibold opacity-75 block">Choose your size:</span>
+        <div class="flex items-center space-x-2 lg:justify-end">
+          <button onclick="selectSize('S')" id="size-S" class="size-btn w-10 h-10 rounded-full border border-white/30 hover:border-white font-bold text-xs flex items-center justify-center transition">S</button>
+          <button onclick="selectSize('M')" id="size-M" class="size-btn w-10 h-10 rounded-full bg-white text-gray-900 font-bold text-xs flex items-center justify-center shadow-lg">M</button>
+          <button onclick="selectSize('L')" id="size-L" class="size-btn w-10 h-10 rounded-full border border-white/30 hover:border-white font-bold text-xs flex items-center justify-center transition">L</button>
+          <button onclick="selectSize('XL')" id="size-XL" class="size-btn w-10 h-10 rounded-full border border-white/30 hover:border-white font-bold text-xs flex items-center justify-center transition">XL</button>
+        </div>
+        <p id="stockNotice" class="text-[11px] font-semibold text-amber-400/90 pt-1 flex items-center gap-1 lg:justify-end">
+          <span>🔥</span> Low Stock: Only 3 items left in Size M
+        </p>
+      </div>
+
+      <!-- SELECT COLOR -->
+      <div class="space-y-3 w-full pt-2">
+        <span class="text-xs uppercase tracking-wider font-semibold opacity-75 block">Select Color:</span>
+        <div class="flex items-center space-x-3 lg:justify-end">
+          <button onclick="changeColor('black')" class="w-9 h-9 rounded-full bg-[#121212] border-2 border-white/80 shadow-lg transform hover:scale-110 transition focus:outline-none"></button>
+          <button onclick="changeColor('green')" class="w-9 h-9 rounded-full bg-[#1b3022] border-2 border-white/80 shadow-lg transform hover:scale-110 transition focus:outline-none"></button>
+          <button onclick="changeColor('grey')" class="w-9 h-9 rounded-full bg-[#5a5a5a] border-2 border-white/80 shadow-lg transform hover:scale-110 transition focus:outline-none"></button>
+          <button onclick="changeColor('cream')" class="w-9 h-9 rounded-full bg-[#f7f4e6] border-2 border-gray-400 shadow-lg transform hover:scale-110 transition focus:outline-none"></button>
+        </div>
+      </div>
+
+      <div class="pt-2 hidden sm:block">
+        <div class="w-16 h-20 bg-white/10 rounded-xl overflow-hidden p-1 border border-white/20">
+          <img src="shirt-black.png" id="thumbImage" alt="Preview" class="w-full h-full object-contain">
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MULTI-ITEM SIDE CART DRAWER -->
+  <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-[#181818] text-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col justify-between border-l border-white/10">
+    <div class="p-6 border-b border-white/10 flex items-center justify-between">
+      <h3 class="font-bold text-lg flex items-center gap-2">🛒 Your Shopping Bag</h3>
+      <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-xl p-1">✕</button>
+    </div>
+
+    <div id="cartList" class="p-6 flex-1 overflow-y-auto space-y-4"></div>
+
+    <div class="p-6 border-t border-white/10 space-y-4 bg-black/20">
+      <div class="space-y-1 text-sm">
+        <div class="flex justify-between text-gray-400">
+          <span>Subtotal</span>
+          <span id="subtotalText">$0</span>
+        </div>
+        <div class="flex justify-between text-gray-400">
+          <span>Shipping (Express)</span>
+          <span>Free</span>
+        </div>
+        <div class="flex justify-between font-bold text-base text-white pt-2 border-t border-white/10">
+          <span>Total</span>
+          <span id="totalText">$0</span>
+        </div>
+      </div>
+
+      <button id="checkoutBtn" onclick="openCheckout()" class="w-full bg-white text-gray-900 font-bold py-3.5 rounded-full text-sm shadow-xl hover:bg-opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed">
+        Proceed to Checkout →
+      </button>
+    </div>
+  </div>
+
+  <div id="cartBackdrop" onclick="toggleCart()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden transition-opacity"></div>
+
+  <!-- CHECKOUT MODAL -->
+  <div id="checkoutModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="bg-[#1f1f1f] text-white w-full max-w-lg rounded-3xl p-6 sm:p-8 space-y-5 border border-white/10 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      
+      <button onclick="closeCheckout()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl">✕</button>
+
+      <div class="space-y-1">
+        <span class="text-xs uppercase tracking-widest text-green-400 font-semibold">LITTLE HARBOR CHECKOUT</span>
+        <h3 class="text-2xl font-bold">Payment via QRIS / Bank Transfer</h3>
+      </div>
+
+      <form id="checkoutForm" onsubmit="redirectToWhatsApp(event)" class="space-y-4 text-xs">
+        <div class="space-y-2">
+          <label class="font-semibold text-gray-300 block">Customer Information</label>
+          <input id="custName" type="text" required placeholder="Full Name" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-white">
+          <input id="custPhone" type="tel" required placeholder="WhatsApp Number" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-white">
+          <textarea id="custAddress" required rows="2" placeholder="Full Shipping Address" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-white"></textarea>
+        </div>
+
+        <div class="bg-white text-gray-900 rounded-2xl p-4 text-center space-y-3 border border-white/20 shadow-inner">
+          <span class="text-[10px] font-bold tracking-widest uppercase text-gray-500 block">Scan QRIS or Bank Transfer</span>
+          
+          <div class="w-44 h-44 mx-auto bg-gray-100 rounded-xl p-2 flex items-center justify-center border border-gray-200">
+            <img src="qris-code.jpg" alt="QRIS Barcode" class="w-full h-full object-contain">
+          </div>
+
+          <div class="bg-gray-100 rounded-xl p-2.5 border border-gray-300 flex items-center justify-between text-left">
+            <div>
+              <p class="text-[10px] font-bold text-gray-500 uppercase">Bank BCA</p>
+              <p class="text-xs font-extrabold text-gray-900 tracking-wider">1940438809</p>
+              <p class="text-[9px] text-gray-600">a.n. LITTLE HARBOR</p>
+            </div>
+            <button type="button" onclick="copyAccountNo()" class="bg-[#121212] hover:bg-black text-white px-3 py-1.5 rounded-lg text-[10px] font-bold transition flex items-center gap-1 shadow">
+              <span>📋</span> Copy No. Rek
+            </button>
+          </div>
+
+          <div class="text-xs font-bold text-gray-800">
+            Total Amount: <span id="qrisTotalAmount" class="text-green-700 font-extrabold text-sm">$0</span>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-black font-extrabold py-3.5 rounded-full text-xs shadow-xl transition flex items-center justify-center gap-2">
+          <span>Continue to WhatsApp</span>
+          <span>💬</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="text-center text-xs opacity-50 py-2 font-glacial">
+    &copy; 2026 LITTLE HARBOR. All rights reserved.
+  </footer>
+
+  <!-- SCRIPT UTAMA + SCRIPT CUSTOM GLOW CURSOR -->
+  <script>
+    // 1. CUSTOM GLOW CURSOR SCRIPT
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      if(dot) {
+        dot.style.left = `${mouseX}px`;
+        dot.style.top = `${mouseY}px`;
+      }
+    });
+
+    function renderCursorRing() {
+      // Smooth Follow Effect (Lerp)
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+
+      if(ring) {
+        ring.style.left = `${ringX}px`;
+        ring.style.top = `${ringY}px`;
+      }
+
+      requestAnimationFrame(renderCursorRing);
+    }
+    renderCursorRing();
+
+    // Hover Interaction pada Tombol & Link
+    document.querySelectorAll('a, button, input, textarea, img').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    // 2. PRODUCT & SHOPPING LOGIC
+    let currentCurrency = 'USD';
+    const unitPriceUSD = 7;
+    const oldPriceUSD = 10;
+    const IDR_RATE = 18000;
+
+    let currentVariant = 'black';
+    let currentSize = 'M';
+    let isLoved = false;
+
+    const YOUR_WA_NUMBER = "6283137005325"; 
+    const BCA_REK_NUMBER = "1940438809";
+
+    const stockMap = {
+      'S': 'Only 5 items left in Size S',
+      'M': 'Only 3 items left in Size M',
+      'L': 'In Stock (Ready to Ship)',
+      'XL': 'Only 2 items left in Size XL'
+    };
+
+    let cartItems = [{ variant: 'black', size: 'M', qty: 1 }];
+
+    const colorData = {
+      black: { bg: '#121212', textColor: '#ffffff', glow: 'rgba(255, 255, 255, 0.12)', image: 'shirt-black.png', name: 'Black' },
+      green: { bg: '#1b3022', textColor: '#ffffff', glow: 'rgba(112, 224, 0, 0.15)', image: 'shirt-green.png', name: 'Dark Forest Green' },
+      grey:  { bg: '#3f3f3f', textColor: '#ffffff', glow: 'rgba(200, 200, 200, 0.2)', image: 'shirt-grey.png', name: 'Grey' },
+      cream: { bg: '#f7f4e6', textColor: '#1b3022', glow: 'rgba(27, 48, 34, 0.15)', image: 'shirt-cream.png', name: 'Cream' }
+    };
+
+    function initPage() {
+      changeColor('black');
+      renderCart();
+    }
+
+    function setCurrency(curr) {
+      currentCurrency = curr;
+      const usdBtn = document.getElementById('curr-usd');
+      const idrBtn = document.getElementById('curr-idr');
+
+      if (curr === 'USD') {
+        usdBtn.className = "px-2.5 py-1 rounded-full bg-white text-black transition font-bold";
+        idrBtn.className = "px-2.5 py-1 rounded-full text-gray-300 hover:text-white transition";
+      } else {
+        idrBtn.className = "px-2.5 py-1 rounded-full bg-white text-black transition font-bold";
+        usdBtn.className = "px-2.5 py-1 rounded-full text-gray-300 hover:text-white transition";
+      }
+
+      document.getElementById('priceText').innerText = formatPrice(unitPriceUSD);
+      document.getElementById('oldPriceText').innerText = formatPrice(oldPriceUSD);
+      renderCart();
+    }
+
+    function formatPrice(usdAmount) {
+      if (currentCurrency === 'USD') return `$${usdAmount}`;
+      return `Rp${(usdAmount * IDR_RATE).toLocaleString('id-ID')}`;
+    }
+
+    function changeColor(variant) {
+      currentVariant = variant;
+      const data = colorData[variant];
+      document.getElementById('pageBg').style.backgroundColor = data.bg;
+      document.getElementById('pageBg').style.color = data.textColor;
+      document.getElementById('glowCircle').style.backgroundColor = data.glow;
+      
+      const img = document.getElementById('productImage');
+      const thumb = document.getElementById('thumbImage');
+      
+      img.style.opacity = '0';
+      img.style.transform = 'scale(0.95)';
+      
+      setTimeout(() => {
+        img.src = data.image;
+        if(thumb) thumb.src = data.image;
+        img.style.opacity = '1';
+        img.style.transform = 'scale(1)';
+      }, 200);
+    }
+
+    function selectSize(size) {
+      currentSize = size;
+      document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.className = "size-btn w-10 h-10 rounded-full border border-white/30 font-bold text-xs flex items-center justify-center transition";
+      });
+      const activeBtn = document.getElementById(`size-${size}`);
+      if(activeBtn) activeBtn.className = "size-btn w-10 h-10 rounded-full bg-white text-gray-900 font-bold text-xs flex items-center justify-center shadow-lg";
+
+      const stockText = stockMap[size] || 'Available';
+      document.getElementById('stockNotice').innerHTML = `<span>🔥</span> ${stockText}`;
+    }
+
+    function shareProduct() {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(window.location.href);
+        showToast("Link copied! Share peace with your friends 🕊️");
+      } else {
+        showToast("Copied to clipboard!");
+      }
+    }
+
+    function copyAccountNo() {
+      navigator.clipboard.writeText(BCA_REK_NUMBER).then(() => {
+        showToast("Nomor Rekening BCA Berhasil Disalin! 📋");
+      });
+    }
+
+    function addToBag() {
+      const existingIndex = cartItems.findIndex(i => i.variant === currentVariant && i.size === currentSize);
+      if (existingIndex > -1) {
+        cartItems[existingIndex].qty += 1;
+      } else {
+        cartItems.push({ variant: currentVariant, size: currentSize, qty: 1 });
+      }
+      renderCart();
+      showToast(`${colorData[currentVariant].name} (${currentSize}) added!`);
+      toggleCart();
+    }
+
+    function renderCart() {
+      const listContainer = document.getElementById('cartList');
+      if (!listContainer) return;
+      listContainer.innerHTML = '';
+
+      if (cartItems.length === 0) {
+        listContainer.innerHTML = `<div class="text-center py-12 text-gray-400 text-xs">Your shopping bag is empty.</div>`;
+        document.getElementById('checkoutBtn').disabled = true;
+      } else {
+        document.getElementById('checkoutBtn').disabled = false;
+        cartItems.forEach((item, index) => {
+          const data = colorData[item.variant];
+          const itemTotalUSD = item.qty * unitPriceUSD;
+
+          const itemHTML = `
+            <div class="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10">
+              <div class="w-16 h-16 bg-black/30 rounded-xl p-1 flex items-center justify-center shrink-0">
+                <img src="${data.image}" class="w-full h-full object-contain">
+              </div>
+              <div class="flex-1 space-y-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="font-bold text-xs">Peace Looks Good On Me Tee</h4>
+                  <button onclick="removeItem(${index})" class="text-gray-500 hover:text-red-400 text-xs">✕</button>
+                </div>
+                <p class="text-[11px] text-gray-400">Color: ${data.name} | Size: ${item.size}</p>
+                <div class="flex items-center justify-between pt-1">
+                  <div class="flex items-center border border-white/20 rounded-full px-2 py-0.5 text-xs">
+                    <button onclick="updateItemQty(${index}, -1)" class="px-1 font-bold text-gray-400 hover:text-white">-</button>
+                    <span class="px-2 font-bold">${item.qty}</span>
+                    <button onclick="updateItemQty(${index}, 1)" class="px-1 font-bold text-gray-400 hover:text-white">+</button>
+                  </div>
+                  <span class="font-bold text-xs">${formatPrice(itemTotalUSD)}</span>
+                </div>
+              </div>
+            </div>
+          `;
+          listContainer.innerHTML += itemHTML;
+        });
+      }
+
+      const grandTotalUSD = cartItems.reduce((sum, i) => sum + (i.qty * unitPriceUSD), 0);
+      const totalCount = cartItems.reduce((sum, i) => sum + i.qty, 0);
+
+      document.getElementById('cartBadge').innerText = totalCount;
+      document.getElementById('subtotalText').innerText = formatPrice(grandTotalUSD);
+      document.getElementById('totalText').innerText = formatPrice(grandTotalUSD);
+      document.getElementById('qrisTotalAmount').innerText = formatPrice(grandTotalUSD);
+    }
+
+    function updateItemQty(index, change) {
+      cartItems[index].qty += change;
+      if (cartItems[index].qty < 1) cartItems.splice(index, 1);
+      renderCart();
+    }
+
+    function removeItem(index) {
+      cartItems.splice(index, 1);
+      renderCart();
+    }
+
+    function toggleCart() {
+      const drawer = document.getElementById('cartDrawer');
+      const backdrop = document.getElementById('cartBackdrop');
+      const isOpen = !drawer.classList.contains('translate-x-full');
+      
+      if(isOpen) {
+        drawer.classList.add('translate-x-full');
+        backdrop.classList.add('hidden');
+      } else {
+        drawer.classList.remove('translate-x-full');
+        backdrop.classList.remove('hidden');
+      }
+    }
+
+    function toggleLove() {
+      isLoved = !isLoved;
+      const loveBtn = document.getElementById('loveBtn');
+      const loveIcon = document.getElementById('loveIcon');
+      
+      loveBtn.classList.remove('animate-heart');
+      void loveBtn.offsetWidth;
+      loveBtn.classList.add('animate-heart');
+
+      if (isLoved) {
+        loveIcon.innerText = "❤️";
+        loveBtn.classList.add('bg-red-500/20');
+        showToast("Added to Wishlist!");
+      } else {
+        loveIcon.innerText = "♡";
+        loveBtn.classList.remove('bg-red-500/20');
+        showToast("Removed from Wishlist");
+      }
+    }
+
+    function selectProductType(type) {
+      if (type !== 'OVERSIZED') showToast(`${type} is Coming Soon! ⏳`);
+      else showToast("Oversized T-Shirt selected");
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toastNotice');
+      document.getElementById('toastText').innerText = text;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2200);
+    }
+
+    function openCheckout() {
+      toggleCart();
+      document.getElementById('checkoutModal').classList.remove('hidden');
+    }
+
+    function closeCheckout() {
+      document.getElementById('checkoutModal').classList.add('hidden');
+    }
+
+    function redirectToWhatsApp(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('custName').value;
+      const phone = document.getElementById('custPhone').value;
+      const address = document.getElementById('custAddress').value;
+      const grandTotalUSD = cartItems.reduce((sum, i) => sum + (i.qty * unitPriceUSD), 0);
+      const formattedGrandTotal = formatPrice(grandTotalUSD);
+
+      let itemsSummary = "";
+      cartItems.forEach((item, idx) => {
+        const cName = colorData[item.variant].name;
+        const itemPriceFormatted = formatPrice(item.qty * unitPriceUSD);
+        itemsSummary += `${idx + 1}. Peace Looks Good On Me Tee%0A   - Warna: ${cName}%0A   - Ukuran: ${item.size}%0A   - Qty: ${item.qty} pcs (${itemPriceFormatted})%0A`;
+      });
+
+      const message = `Halo *LITTLE HARBOR*, saya ingin mengonfirmasi pesanan saya:%0A%0A` +
+        `🛍️ *RINCIAN BARANG:*%0A${itemsSummary}%0A` +
+        `💳 *TOTAL BAYAR:* *${formattedGrandTotal}*%0A%0A` +
+        `👤 *DATA PEMBELI:*%0A` +
+        `- Nama: ${name}%0A` +
+        `- No. HP: ${phone}%0A` +
+        `- Alamat: ${address}%0A%0A` +
+        `-----------------------------------%0A` +
+        `*Saya sudah melakukan pembayaran via QRIS / Bank BCA (1940438809). Berikut saya lampirkan foto/screenshot bukti pembayarannya. Terima kasih!*`;
+
+      const waUrl = `https://wa.me/${YOUR_WA_NUMBER}?text=${message}`;
+      window.open(waUrl, '_blank');
+      
+      closeCheckout();
+    }
+  </script>
+
+</body>
+</html>
