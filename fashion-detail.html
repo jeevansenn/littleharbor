@@ -207,8 +207,8 @@
       </div>
 
       <div class="pt-2">
-        <button onclick="addToBag()" class="bg-white text-gray-900 font-bold px-7 py-3 rounded-full text-xs shadow-xl hover:bg-opacity-90 transition transform hover:scale-105 flex items-center space-x-2">
-          <span>+ Add to Bag</span>
+        <button id="directBuyBtn" onclick="checkoutCurrentProduct(event)" class="bg-white text-gray-900 font-bold px-7 py-3 rounded-full text-xs shadow-xl hover:bg-opacity-90 transition transform hover:scale-105 flex items-center space-x-2">
+          <span>Buy Now via Doku</span>
           <span>></span>
         </button>
       </div>
@@ -319,70 +319,20 @@
         </div>
       </div>
 
-      <button id="checkoutBtn" onclick="openCheckout()" class="w-full bg-white text-gray-900 font-bold py-3.5 rounded-full text-sm shadow-xl hover:bg-opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed">
-        Proceed to Checkout →
+      <button id="checkoutBtn" onclick="checkoutFromBag(event)" class="w-full bg-white text-gray-900 font-bold py-3.5 rounded-full text-sm shadow-xl hover:bg-opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed">
+        Proceed to Doku Checkout →
       </button>
     </div>
   </div>
 
   <div id="cartBackdrop" onclick="toggleCart()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden transition-opacity"></div>
 
-  <!-- CHECKOUT MODAL -->
-  <div id="checkoutModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-    <div class="bg-[#1f1f1f] text-white w-full max-w-lg rounded-3xl p-6 sm:p-8 space-y-5 border border-white/10 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-      
-      <button onclick="closeCheckout()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl">✕</button>
-
-      <div class="space-y-1">
-        <span class="text-xs uppercase tracking-widest text-green-400 font-semibold">LITTLE HARBOR CHECKOUT</span>
-        <h3 class="text-2xl font-bold">Payment via QRIS / Bank Transfer</h3>
-      </div>
-
-      <form id="checkoutForm" onsubmit="redirectToWhatsApp(event)" class="space-y-4 text-xs">
-        <div class="space-y-2">
-          <label class="font-semibold text-gray-300 block">Customer Information</label>
-          <input id="custName" type="text" required placeholder="Full Name" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-white">
-          <input id="custPhone" type="tel" required placeholder="WhatsApp Number" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-white">
-          <textarea id="custAddress" required rows="2" placeholder="Full Shipping Address" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-white"></textarea>
-        </div>
-
-        <div class="bg-white text-gray-900 rounded-2xl p-4 text-center space-y-3 border border-white/20 shadow-inner">
-          <span class="text-[10px] font-bold tracking-widest uppercase text-gray-500 block">Scan QRIS or Bank Transfer</span>
-          
-          <div class="w-44 h-44 mx-auto bg-gray-100 rounded-xl p-2 flex items-center justify-center border border-gray-200">
-            <img src="qris-code.jpg" alt="QRIS Barcode" class="w-full h-full object-contain">
-          </div>
-
-          <div class="bg-gray-100 rounded-xl p-2.5 border border-gray-300 flex items-center justify-between text-left">
-            <div>
-              <p class="text-[10px] font-bold text-gray-500 uppercase">Bank BCA</p>
-              <p class="text-xs font-extrabold text-gray-900 tracking-wider">1940438809</p>
-              <p class="text-[9px] text-gray-600">a.n. LITTLE HARBOR</p>
-            </div>
-            <button type="button" onclick="copyAccountNo()" class="bg-[#121212] hover:bg-black text-white px-3 py-1.5 rounded-lg text-[10px] font-bold transition flex items-center gap-1 shadow">
-              <span>📋</span> Copy No. Rek
-            </button>
-          </div>
-
-          <div class="text-xs font-bold text-gray-800">
-            Total Amount: <span id="qrisTotalAmount" class="text-green-700 font-extrabold text-sm">$0</span>
-          </div>
-        </div>
-
-        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-black font-extrabold py-3.5 rounded-full text-xs shadow-xl transition flex items-center justify-center gap-2">
-          <span>Continue to WhatsApp</span>
-          <span>💬</span>
-        </button>
-      </form>
-    </div>
-  </div>
-
   <!-- FOOTER -->
   <footer class="text-center text-xs opacity-50 py-2 font-glacial">
     &copy; 2026 LITTLE HARBOR. All rights reserved.
   </footer>
 
-  <!-- SCRIPT UTAMA + SCRIPT CUSTOM GLOW CURSOR -->
+  <!-- SCRIPT UTAMA + DIRECT CHECKOUT DOKU -->
   <script>
     // 1. CUSTOM GLOW CURSOR SCRIPT
     const dot = document.getElementById('cursor-dot');
@@ -402,7 +352,6 @@
     });
 
     function renderCursorRing() {
-      // Smooth Follow Effect (Lerp)
       ringX += (mouseX - ringX) * 0.15;
       ringY += (mouseY - ringY) * 0.15;
 
@@ -415,7 +364,6 @@
     }
     renderCursorRing();
 
-    // Hover Interaction pada Tombol & Link
     document.querySelectorAll('a, button, input, textarea, img').forEach(el => {
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
@@ -430,9 +378,6 @@
     let currentVariant = 'black';
     let currentSize = 'M';
     let isLoved = false;
-
-    const YOUR_WA_NUMBER = "6283137005325"; 
-    const BCA_REK_NUMBER = "1940438809";
 
     const stockMap = {
       'S': 'Only 5 items left in Size S',
@@ -520,24 +465,6 @@
       }
     }
 
-    function copyAccountNo() {
-      navigator.clipboard.writeText(BCA_REK_NUMBER).then(() => {
-        showToast("Nomor Rekening BCA Berhasil Disalin! 📋");
-      });
-    }
-
-    function addToBag() {
-      const existingIndex = cartItems.findIndex(i => i.variant === currentVariant && i.size === currentSize);
-      if (existingIndex > -1) {
-        cartItems[existingIndex].qty += 1;
-      } else {
-        cartItems.push({ variant: currentVariant, size: currentSize, qty: 1 });
-      }
-      renderCart();
-      showToast(`${colorData[currentVariant].name} (${currentSize}) added!`);
-      toggleCart();
-    }
-
     function renderCart() {
       const listContainer = document.getElementById('cartList');
       if (!listContainer) return;
@@ -584,7 +511,6 @@
       document.getElementById('cartBadge').innerText = totalCount;
       document.getElementById('subtotalText').innerText = formatPrice(grandTotalUSD);
       document.getElementById('totalText').innerText = formatPrice(grandTotalUSD);
-      document.getElementById('qrisTotalAmount').innerText = formatPrice(grandTotalUSD);
     }
 
     function updateItemQty(index, change) {
@@ -649,47 +575,73 @@
       }, 2200);
     }
 
-    function openCheckout() {
-      toggleCart();
-      document.getElementById('checkoutModal').classList.remove('hidden');
+    // --- 3. DOKU PAYMENT API INTEGRATION ---
+    async function executeDokuCheckout(itemsPayload, totalRupiah, btnElement) {
+      const originalText = btnElement.innerHTML;
+      btnElement.innerHTML = "<span>Processing Doku Payment...</span>";
+      btnElement.disabled = true;
+
+      try {
+        const response = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            items: itemsPayload,
+            totalAmount: totalRupiah,
+            customerName: "Buyer Little Harbor"
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.success && data.paymentUrl) {
+          window.location.href = data.paymentUrl;
+        } else {
+          alert("Gagal memproses pembayaran Doku. Silakan coba lagi.");
+          btnElement.innerHTML = originalText;
+          btnElement.disabled = false;
+        }
+      } catch (err) {
+        console.error("Doku Checkout Error:", err);
+        alert("Terjadi kesalahan sistem saat menghubungkan ke Doku.");
+        btnElement.innerHTML = originalText;
+        btnElement.disabled = false;
+      }
     }
 
-    function closeCheckout() {
-      document.getElementById('checkoutModal').classList.add('hidden');
+    // Direct Buy dari Tombol Halaman Utama
+    function checkoutCurrentProduct(event) {
+      const btn = event.currentTarget;
+      const productName = `Peace Looks Good On Me Tee (${colorData[currentVariant].name} - ${currentSize})`;
+      const priceInIDR = unitPriceUSD * IDR_RATE; // Rp 126.000
+
+      const items = [{
+        name: productName,
+        price: priceInIDR,
+        quantity: 1
+      }];
+
+      executeDokuCheckout(items, priceInIDR, btn);
     }
 
-    function redirectToWhatsApp(event) {
-      event.preventDefault();
-      
-      const name = document.getElementById('custName').value;
-      const phone = document.getElementById('custPhone').value;
-      const address = document.getElementById('custAddress').value;
-      const grandTotalUSD = cartItems.reduce((sum, i) => sum + (i.qty * unitPriceUSD), 0);
-      const formattedGrandTotal = formatPrice(grandTotalUSD);
+    // Checkout gabungan dari Shopping Bag
+    function checkoutFromBag(event) {
+      const btn = event.currentTarget;
+      if (cartItems.length === 0) return;
 
-      let itemsSummary = "";
-      cartItems.forEach((item, idx) => {
-        const cName = colorData[item.variant].name;
-        const itemPriceFormatted = formatPrice(item.qty * unitPriceUSD);
-        itemsSummary += `${idx + 1}. Peace Looks Good On Me Tee%0A   - Warna: ${cName}%0A   - Ukuran: ${item.size}%0A   - Qty: ${item.qty} pcs (${itemPriceFormatted})%0A`;
+      let totalIDR = 0;
+      const itemsPayload = cartItems.map(item => {
+        const itemPriceIDR = unitPriceUSD * IDR_RATE;
+        totalIDR += itemPriceIDR * item.qty;
+        return {
+          name: `Peace Tee (${colorData[item.variant].name} - ${item.size})`,
+          price: itemPriceIDR,
+          quantity: item.qty
+        };
       });
 
-      const message = `Halo *LITTLE HARBOR*, saya ingin mengonfirmasi pesanan saya:%0A%0A` +
-        `🛍️ *RINCIAN BARANG:*%0A${itemsSummary}%0A` +
-        `💳 *TOTAL BAYAR:* *${formattedGrandTotal}*%0A%0A` +
-        `👤 *DATA PEMBELI:*%0A` +
-        `- Nama: ${name}%0A` +
-        `- No. HP: ${phone}%0A` +
-        `- Alamat: ${address}%0A%0A` +
-        `-----------------------------------%0A` +
-        `*Saya sudah melakukan pembayaran via QRIS / Bank BCA (1940438809). Berikut saya lampirkan foto/screenshot bukti pembayarannya. Terima kasih!*`;
-
-      const waUrl = `https://wa.me/${YOUR_WA_NUMBER}?text=${message}`;
-      window.open(waUrl, '_blank');
-      
-      closeCheckout();
+      executeDokuCheckout(itemsPayload, totalIDR, btn);
     }
   </script>
-
 </body>
 </html>
