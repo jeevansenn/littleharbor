@@ -14,7 +14,7 @@
     /* === CUSTOM GLOW CURSOR STYLES === */
     @media (min-width: 768px) {
       body, a, button, input, textarea {
-        cursor: none !important; /* Sembunyikan kursor bawaan di layar desktop */
+        cursor: none !important;
       }
     }
 
@@ -52,7 +52,6 @@
                   background 0.3s;
     }
 
-    /* Efek Kursor saat Hover elemen interaktif */
     .cursor-hover #cursor-ring {
       width: 55px;
       height: 55px;
@@ -332,7 +331,7 @@
     &copy; 2026 LITTLE HARBOR. All rights reserved.
   </footer>
 
-  <!-- SCRIPT UTAMA + DIRECT CHECKOUT DOKU -->
+  <!-- SCRIPT UTAMA + DIRECT CHECKOUT DOKU (PERBAIKAN PAYLOAD) -->
   <script>
     // 1. CUSTOM GLOW CURSOR SCRIPT
     const dot = document.getElementById('cursor-dot');
@@ -575,7 +574,7 @@
       }, 2200);
     }
 
-    // --- 3. DOKU PAYMENT API INTEGRATION ---
+    // --- 3. DOKU PAYMENT API INTEGRATION (UPDATED WITH DETAILED LOGS & ROUNDING) ---
     async function executeDokuCheckout(itemsPayload, totalRupiah, btnElement) {
       const originalText = btnElement.innerHTML;
       btnElement.innerHTML = "<span>Processing Doku Payment...</span>";
@@ -587,23 +586,24 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             items: itemsPayload,
-            totalAmount: totalRupiah,
+            totalAmount: Math.round(totalRupiah),
             customerName: "Buyer Little Harbor"
           })
         });
 
         const data = await response.json();
 
-        if (data.success && data.paymentUrl) {
+        if (response.ok && data.success && data.paymentUrl) {
           window.location.href = data.paymentUrl;
         } else {
-          alert("Gagal memproses pembayaran Doku. Silakan coba lagi.");
+          console.error("Doku API Error Detail:", data);
+          alert(`Gagal Checkout: ${data.message || data.error || 'Terjadi kesalahan pada Doku API'}`);
           btnElement.innerHTML = originalText;
           btnElement.disabled = false;
         }
       } catch (err) {
         console.error("Doku Checkout Error:", err);
-        alert("Terjadi kesalahan sistem saat menghubungkan ke Doku.");
+        alert("Terjadi kesalahan koneksi jaringan.");
         btnElement.innerHTML = originalText;
         btnElement.disabled = false;
       }
@@ -612,8 +612,8 @@
     // Direct Buy dari Tombol Halaman Utama
     function checkoutCurrentProduct(event) {
       const btn = event.currentTarget;
-      const productName = `Peace Looks Good On Me Tee (${colorData[currentVariant].name} - ${currentSize})`;
-      const priceInIDR = unitPriceUSD * IDR_RATE; // Rp 126.000
+      const productName = `Peace Tee (${colorData[currentVariant].name} - ${currentSize})`;
+      const priceInIDR = Math.round(unitPriceUSD * IDR_RATE);
 
       const items = [{
         name: productName,
@@ -631,7 +631,7 @@
 
       let totalIDR = 0;
       const itemsPayload = cartItems.map(item => {
-        const itemPriceIDR = unitPriceUSD * IDR_RATE;
+        const itemPriceIDR = Math.round(unitPriceUSD * IDR_RATE);
         totalIDR += itemPriceIDR * item.qty;
         return {
           name: `Peace Tee (${colorData[item.variant].name} - ${item.size})`,
@@ -640,7 +640,7 @@
         };
       });
 
-      executeDokuCheckout(itemsPayload, totalIDR, btn);
+      executeDokuCheckout(itemsPayload, Math.round(totalIDR), btn);
     }
   </script>
 </body>
